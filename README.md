@@ -40,5 +40,5 @@ Siga os passos abaixo para rodar o NextGate na sua máquina.
 
 ### 1. Clonando o repositório
 ```bash
-git clone [https://github.com/SEU-USUARIO/nextgate.git](https://github.com/SEU-USUARIO/nextgate.git)
+git clone https://github.com/Lucas-FV/NextGate.git
 cd nextgate
