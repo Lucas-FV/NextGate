@@ -18,7 +18,7 @@ public class Booking {
    
    @Id
    private String id;
-   private String passangerId;
+   private String passengerId;
    private String flightId;
    private LocalDateTime bookingDate;
    private BookingStatus status;
