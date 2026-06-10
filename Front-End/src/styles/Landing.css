@@ -1,0 +1,174 @@
+/* src/styles/Landing.css */
+.landing-container {
+  min-height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #1a1a1a;
+  padding: 0 5%;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: #325fb4;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  color: #4a5568;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #325fb4;
+}
+
+.btn-login-outline {
+  padding: 10px 24px;
+  background-color: transparent;
+  color: #325fb4;
+  border: 2px solid #325fb4;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-login-outline:hover {
+  background-color: #325fb4;
+  color: #ffffff;
+}
+
+/* HERO SECTION */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+  color: #1a1a1a; /* Forçando a cor escura para corrigir o sumiço do texto! */
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #718096;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+/* ESTILOS DA NOVA IMAGEM */
+.hero-image-container {
+  width: 100%;
+  max-width: 1100px;
+  height: 380px;
+  border-radius: 200px; /* Cria o formato de pílula gigante */
+  overflow: hidden; /* Impede que a imagem quadrada "vaze" pelos cantos redondos */
+  margin-bottom: -50px; /* Puxa a barra de busca para cima da imagem */
+  position: relative;
+  z-index: 0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
+  object-position: center 60%; /* Ajusta o foco do avião */
+}
+
+/* SEARCH WIDGET */
+.search-widget {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 50px;
+  box-shadow: 0 20px 40px rgba(43, 89, 180, 0.15); /* Sombra um pouco mais forte */
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  position: relative; /* Necessário para o z-index funcionar */
+  z-index: 1; /* Garante que a barra fique POR CIMA da imagem */
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  flex: 1;
+}
+
+.search-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 4px;
+  padding-left: 4px;
+}
+
+.search-field input {
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  color: #1a1a1a;
+  outline: none;
+  padding: 4px;
+}
+
+.search-field input::placeholder {
+  color: #a0aec0;
+}
+
+.divider {
+  width: 1px;
+  height: 40px;
+  background-color: #e2e8f0;
+}
+
+.btn-search-main {
+  background-color: #325fb4;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-search-main:hover {
+  background-color: #284c94;
+  transform: translateY(-2px);
+}

@@ -1,0 +1,100 @@
+/* src/styles/Login.css */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* Um fundo off-white bem suave, levemente voltado pro cinza/azulado frio */
+  background-color: #f7f9fc; 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.login-card {
+  background: #ffffff;
+  padding: 48px 40px;
+  border-radius: 24px; /* Cantos bem arredondados como na referência */
+  /* Sombra elegante, grande porém muito transparente */
+  box-shadow: 0 20px 40px rgba(43, 89, 180, 0.08); 
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-title {
+  color: #1a1a1a;
+  margin-bottom: 6px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+/* O azul céu escuro para contraste no logotipo */
+.login-title span {
+  color: #325fb4; 
+}
+
+.login-subtitle {
+  color: #718096;
+  margin-bottom: 36px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.input-group {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2d3748;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: #ffffff; /* Forçando fundo branco */
+  color: #1a1a1a; /* Forçando texto escuro */
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.input-group input::placeholder {
+  color: #a0aec0;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #325fb4;
+  /* Brilho azul ao redor do input quando focado */
+  box-shadow: 0 0 0 3px rgba(50, 95, 180, 0.15); 
+}
+
+.login-button {
+  width: 100%;
+  padding: 16px;
+  background-color: #325fb4; /* O azul principal da marca */
+  color: #ffffff;
+  border: none;
+  border-radius: 50px; /* Botão formato pílula, inspirado na sua imagem */
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin-top: 8px;
+}
+
+.login-button:hover {
+  background-color: #284c94;
+}
+
+.login-button:active {
+  transform: translateY(2px);
+}
