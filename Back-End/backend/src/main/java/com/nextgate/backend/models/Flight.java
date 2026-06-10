@@ -25,6 +25,6 @@ public class Flight {
    private LocalDateTime departureTime;
    private LocalDateTime arrivalTime;
    private BigDecimal price;
-   private int totalCapacity;
-   private int availableSeats;
+   private Integer totalCapacity;
+   private Integer availableSeats;
 }
