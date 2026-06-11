@@ -1,0 +1,211 @@
+/* src/styles/Register.css */
+.register-container {
+  /* Forçando a quebra das barras laterais do Vite */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+}
+
+.register-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1000px;
+  height: 680px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(43, 89, 180, 0.1);
+  overflow: hidden; /* Prisão visual para esconder a página oculta */
+  position: relative;
+}
+
+/* A ESTEIRA (Muda de posição inteira conforme o estado) */
+.sliding-wrapper {
+  display: flex;
+  width: 145%; /* Composto por: 55% (Form) + 45% (Img) + 45% (Form da direita) */
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Controle de transição de página pelo pai */
+.show-passenger .sliding-wrapper {
+  transform: translateX(0%);
+}
+
+.show-airline .sliding-wrapper {
+  transform: translateX(-31%); /* Desloca a esteira exatamente para alinhar a página 2 */
+}
+
+/* AS SEÇÕES REAIS DENTRO DA ESTEIRA */
+.form-section {
+  width: 38%; /* Proporção ideal dentro da nova largura da esteira */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.form-content {
+  width: 85%;
+  max-width: 380px;
+}
+
+/* SEÇÃO CENTRAL DA IMAGEM */
+.image-section {
+  width: 31%; /* Equivalente ao espaço da foto */
+  height: 100%;
+  position: relative;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clip-container {
+  width: 130%; /* Avança um pouco nas laterais para o corte funcionar */
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ajustes dinâmicos de clip-path e margens para dar o efeito líquido de rascunho */
+.show-passenger .clip-container {
+  left: -20%;
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%, 12% 45%);
+}
+
+.show-airline .clip-container {
+  left: -10%;
+  clip-path: polygon(0% 0%, 100% 0%, 88% 45%, 75% 100%, 0% 100%);
+}
+
+/* GERENCIAMENTO E DA FOTO */
+.image-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.passenger-img {
+  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000");
+  opacity: 1;
+}
+
+.airline-img {
+  background-image: url("https://images.unsplash.com/photo-1540962351504-03099e0a754b?q=80&w=1000");
+  opacity: 0;
+}
+
+.show-airline .passenger-img { opacity: 0; }
+.show-airline .airline-img { opacity: 1; }
+
+.image-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(50, 95, 180, 0.15), rgba(0, 0, 0, 0.35));
+}
+
+/* DETALHES DE ENTRADAS E SWITCHER (Igual ao anterior) */
+.type-switcher {
+  display: flex;
+  background-color: #f1f5f9;
+  padding: 4px;
+  border-radius: 50px;
+  margin-bottom: 28px;
+}
+
+.type-switcher button {
+  flex: 1;
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.type-switcher button.active {
+  background-color: #325fb4;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(50, 95, 180, 0.2);
+}
+
+.register-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.register-subtitle {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 24px;
+}
+
+.reg-input-group {
+  margin-bottom: 16px;
+}
+
+.reg-input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 6px;
+}
+
+.reg-input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  box-sizing: border-box;
+}
+
+.reg-input-group input:focus {
+  outline: none;
+  border-color: #325fb4;
+  box-shadow: 0 0 0 3px rgba(50, 95, 180, 0.12);
+}
+
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #325fb4;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.back-to-login {
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 20px;
+}
+
+.back-to-login span {
+  color: #325fb4;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,23 +1,40 @@
 /* src/styles/Login.css */
 .login-container {
+  /* Forçando a quebra das barras laterais do Vite */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  /* Um fundo off-white bem suave, levemente voltado pro cinza/azulado frio */
+  min-height: 100vh;
   background-color: #f7f9fc; 
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 20px;
 }
 
 .login-card {
   background: #ffffff;
-  padding: 48px 40px;
-  border-radius: 24px; /* Cantos bem arredondados como na referência */
-  /* Sombra elegante, grande porém muito transparente */
+  border-radius: 24px; 
   box-shadow: 0 20px 40px rgba(43, 89, 180, 0.08); 
   width: 100%;
-  max-width: 400px;
-  text-align: center;
+  max-width: 850px; /* Expandido para acomodar a imagem ao lado */
+  height: 550px;
+  display: flex;
+  overflow: hidden;
+}
+
+/* LADO DO FORMULÁRIO */
+.login-form-side {
+  width: 50%;
+  height: 100%;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .login-title {
@@ -28,7 +45,6 @@
   letter-spacing: -0.5px;
 }
 
-/* O azul céu escuro para contraste no logotipo */
 .login-title span {
   color: #325fb4; 
 }
@@ -56,8 +72,8 @@
 .input-group input {
   width: 100%;
   padding: 14px 16px;
-  background-color: #ffffff; /* Forçando fundo branco */
-  color: #1a1a1a; /* Forçando texto escuro */
+  background-color: #ffffff; 
+  color: #1a1a1a; 
   border: 1.5px solid #e2e8f0;
   border-radius: 12px;
   font-size: 15px;
@@ -72,22 +88,21 @@
 .input-group input:focus {
   outline: none;
   border-color: #325fb4;
-  /* Brilho azul ao redor do input quando focado */
   box-shadow: 0 0 0 3px rgba(50, 95, 180, 0.15); 
 }
 
 .login-button {
   width: 100%;
   padding: 16px;
-  background-color: #325fb4; /* O azul principal da marca */
+  background-color: #325fb4; 
   color: #ffffff;
   border: none;
-  border-radius: 50px; /* Botão formato pílula, inspirado na sua imagem */
+  border-radius: 50px; 
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.3px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
+  transition: background-color 0.3s ease;
   margin-top: 8px;
 }
 
@@ -95,6 +110,40 @@
   background-color: #284c94;
 }
 
-.login-button:active {
-  transform: translateY(2px);
+/* LINK PARA O CADASTRO */
+.switch-to-register {
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 24px;
+}
+
+.switch-to-register span {
+  color: #325fb4;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch-to-register span:hover {
+  text-decoration: underline;
+}
+
+/* LADO DA IMAGEM */
+.login-image-side {
+  width: 50%;
+  height: 100%;
+  /* Imagem conceitual de uma janela de avião ou asa combinando com a proposta */
+  background-image: url("https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?q=80&w=1000");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  /* Um corte diagonal sutil para conversar com a estética do cadastro */
+  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  margin-left: -5%;
+}
+
+.login-image-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(50, 95, 180, 0.1), rgba(0, 0, 0, 0.3));
 }
