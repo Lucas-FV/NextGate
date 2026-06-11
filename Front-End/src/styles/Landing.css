@@ -1,5 +1,11 @@
 /* src/styles/Landing.css */
 .landing-container {
+  /* Forçando a quebra das barras laterais do Vite */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  box-sizing: border-box;
   min-height: 100vh;
   background-color: #f7f9fc;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
