@@ -1,6 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../services/api'; // Importando nossa API
 import '../styles/Login.css';
 
 export default function Login() {
@@ -10,14 +11,33 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Tentativa de Login com:", { email, password });
+    
+    try {
+      // 1. Fazemos o POST para a rota de login que vamos criar no Java
+      const response = await api.post('/users/login', { email, password });
+
+      // 2. Por enquanto, vamos salvar os dados do usuário no LocalStorage
+      // Isso simula o comportamento de "sessão"
+      localStorage.setItem('user', JSON.stringify(response.data));
+
+      alert(`Bem-vindo de volta, ${response.data.name}!`);
+
+      // 3. Redireciona para o painel principal
+      navigate('/dashboard');
+
+    } catch (error) {
+      console.error("Erro no login:", error);
+      if (error.response && error.response.status === 401) {
+        alert("E-mail ou senha incorretos.");
+      } else {
+        alert("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+      }
+    }
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
-        
-        {/* COLUNA DA ESQUERDA: FORMULÁRIO */}
         <div className="login-form-side">
           <h1 className="login-title">Next<span>Gate</span></h1>
           <p className="login-subtitle">Acesse o seu painel de voos</p>
@@ -47,22 +67,17 @@ export default function Login() {
               />
             </div>
 
-            <button type="submit" className="login-button">
-              Entrar
-            </button>
+            <button type="submit" className="login-button">Entrar</button>
           </form>
 
-          {/* Link para a página de registro */}
           <p className="switch-to-register">
             Não tem uma conta? <span onClick={() => navigate('/register')}>Criar conta</span>
           </p>
         </div>
 
-        {/* COLUNA DA DIREITA: IMAGEM COM CORTE */}
         <div className="login-image-side">
           <div className="login-image-overlay"></div>
         </div>
-
       </div>
     </div>
   );

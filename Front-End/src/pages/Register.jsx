@@ -1,5 +1,6 @@
 // src/pages/Register.jsx
 import React, { useState } from 'react';
+import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
 
@@ -7,16 +8,45 @@ export default function Register() {
   const [isAirline, setIsAirline] = useState(false);
   const navigate = useNavigate();
 
-  // Estados dos campos
+  // Estados dos campos - Passageiro
   const [pName, setPName] = useState('');
   const [pEmail, setPEmail] = useState('');
   const [pPassword, setPPassword] = useState('');
   const [pDocument, setPDocument] = useState('');
 
+  // Estados dos campos - Empresa Aérea
   const [aName, setAName] = useState('');
   const [aEmail, setAEmail] = useState('');
   const [aPassword, setAPassword] = useState('');
   const [aDocument, setADocument] = useState('');
+
+  // Função centralizada para disparar o POST para o Spring Boot
+  const handleRegister = async (e, role, name, email, document, password) => {
+    e.preventDefault();
+    
+    const payload = {
+      name,
+      email,
+      document,
+      password,
+      role
+    };
+
+    try {
+      await api.post('/users', payload);
+      alert('Cadastro realizado com sucesso! Faça login para continuar.');
+      navigate('/login');
+    } catch (error) {
+      // Isso vai extrair a mensagem exata de erro que o Spring Boot devolveu!
+      if (error.response && error.response.data) {
+        console.error("Motivo da recusa do Java:", error.response.data);
+        alert("Erro do Servidor: " + JSON.stringify(error.response.data));
+      } else {
+        console.error("Erro desconhecido:", error);
+        alert('Erro ao realizar o cadastro. Verifique os dados.');
+      }
+    }
+  };
 
   return (
     <div className="register-container">
@@ -37,7 +67,8 @@ export default function Register() {
                 <button type="button" onClick={() => setIsAirline(true)}>Empresa Aérea</button>
               </div>
 
-              <form onSubmit={(e) => { e.preventDefault(); console.log("Passageiro:", { pName, pEmail }); }}>
+              {/* Conectado à API com role "PASSENGER" */}
+              <form onSubmit={(e) => handleRegister(e, "PASSENGER", pName, pEmail, pDocument, pPassword)}>
                 <div className="reg-input-group">
                   <label>Nome Completo</label>
                   <input type="text" placeholder="Seu nome completo" value={pName} onChange={(e) => setPName(e.target.value)} required />
@@ -80,7 +111,8 @@ export default function Register() {
                 <button type="button" className="active">Empresa Aérea</button>
               </div>
 
-              <form onSubmit={(e) => { e.preventDefault(); console.log("Empresa:", { aName, aEmail }); }}>
+              {/* Conectado à API com role "AIRLINE" */}
+              <form onSubmit={(e) => handleRegister(e, "AIRLINE", aName, aEmail, aDocument, aPassword)}>
                 <div className="reg-input-group">
                   <label>Nome da Empresa</label>
                   <input type="text" placeholder="Nome da Linha Aérea" value={aName} onChange={(e) => setAName(e.target.value)} required />
