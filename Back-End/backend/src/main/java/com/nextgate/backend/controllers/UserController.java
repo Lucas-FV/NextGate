@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.nextgate.backend.dto.LoginRequest;
 
 import java.util.List;
 
@@ -29,5 +30,16 @@ public class UserController {
    @GetMapping
    public ResponseEntity<List<User>> getAllUsers(){
       return ResponseEntity.ok(userService.getAllUsers());
+   }
+
+  @PostMapping("/login")
+   public ResponseEntity<?> loginUser (@RequestBody LoginRequest loginRequest){
+      try {
+         User authenticatedUser = userService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+
+         return ResponseEntity.ok(authenticatedUser);
+      } catch (RuntimeException e) {
+         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+      }
    }
 }

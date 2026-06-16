@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../services/api'; // Importando nossa API
+import { api } from '../services/api'; 
 import '../styles/Login.css';
 
 export default function Login() {
@@ -13,16 +13,13 @@ export default function Login() {
     e.preventDefault();
     
     try {
-      // 1. Fazemos o POST para a rota de login que vamos criar no Java
+      // Dispara o POST para o Spring Boot
       const response = await api.post('/users/login', { email, password });
 
-      // 2. Por enquanto, vamos salvar os dados do usuário no LocalStorage
-      // Isso simula o comportamento de "sessão"
+      // Salva o usuário no LocalStorage do navegador (simulando uma sessão)
       localStorage.setItem('user', JSON.stringify(response.data));
 
-      alert(`Bem-vindo de volta, ${response.data.name}!`);
-
-      // 3. Redireciona para o painel principal
+      // Redireciona para o painel principal
       navigate('/dashboard');
 
     } catch (error) {
@@ -30,7 +27,7 @@ export default function Login() {
       if (error.response && error.response.status === 401) {
         alert("E-mail ou senha incorretos.");
       } else {
-        alert("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        alert("Erro ao conectar com o servidor.");
       }
     }
   };

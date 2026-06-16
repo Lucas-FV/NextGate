@@ -27,4 +27,15 @@ public class UserService {
    public List<User> getAllUsers(){
       return userRepository.findAll();
    }
+
+   public User authenticate(String email, String password){
+      User user = userRepository.findByEmail(email)
+      .orElseThrow(() ->new RuntimeException("E-mail ou senha incorretos."));
+
+      if (!user.getPassword().equals(password)) {
+         throw new RuntimeException("E-mail ou senha incorretos.");
+      }
+
+      return user;
+   }
 }
