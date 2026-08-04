@@ -38,4 +38,19 @@ public class UserService {
 
       return user;
    }
+
+   public User updateUser(String id, User updatedData) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+
+        existingUser.setName(updatedData.getName());
+        existingUser.setEmail(updatedData.getEmail());
+        existingUser.setDocument(updatedData.getDocument());
+        
+        if (updatedData.getPassword() != null && !updatedData.getPassword().isEmpty()) {
+            existingUser.setPassword(updatedData.getPassword());
+        }
+
+        return userRepository.save(existingUser);
+    }
 }

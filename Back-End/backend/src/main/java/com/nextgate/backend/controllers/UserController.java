@@ -42,4 +42,14 @@ public class UserController {
          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
       }
    }
+
+   @PutMapping("/{id}")
+   public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody User user) {
+      try {
+         User updatedUser = userService.updateUser(id, user);
+         return ResponseEntity.ok(updatedUser);
+      } catch (RuntimeException e) {
+         return ResponseEntity.badRequest().body(e.getMessage());
+      }
+   }
 }

@@ -1,31 +1,31 @@
-// src/pages/Dashboard.jsx
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import PassengerDashboard from '../components/PassengerDashboard';
+import AirlineDashboard from '../components/AirlineDashboard';
+import '../styles/Dashboard.css'; // Vamos criar esse CSS em seguida
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  // Recupera o usuário do LocalStorage
   const user = JSON.parse(localStorage.getItem('user'));
+
+  // Proteção de Rota: Se não tiver usuário no LocalStorage, manda pro Login
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    navigate('/');
+    navigate('/login');
   };
 
   return (
-    <div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
-      <h1>Painel de Controle</h1>
-      {user ? (
-        <p>Olá, <strong>{user.name}</strong>! Você está logado como {user.role}.</p>
+    <div className="dashboard-wrapper">
+      {/* Renderização Condicional baseada na Role */}
+      {user.role === 'AIRLINE' ? (
+        <AirlineDashboard user={user} onLogout={handleLogout} />
       ) : (
-        <p>Carregando dados...</p>
+        <PassengerDashboard user={user} onLogout={handleLogout} />
       )}
-      <button 
-        onClick={handleLogout}
-        style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: '#325fb4', color: 'white', border: 'none', borderRadius: '8px' }}
-      >
-        Sair do Sistema
-      </button>
     </div>
   );
 }

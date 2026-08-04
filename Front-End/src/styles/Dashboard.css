@@ -1,0 +1,160 @@
+/* src/styles/Dashboard.css */
+
+/* 1. QUEBRANDO A BARRA PRETA DO VITE */
+.dashboard-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #f7f9fc; /* Fundo off-white do NextGate */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.dashboard-layout {
+  width: 100%;
+}
+
+/* 2. CABEÇALHO IMERSIVO (ESTILO BOOKING) */
+.dashboard-hero {
+  /* Azul profundo e elegante */
+  background: linear-gradient(135deg, #00225c 0%, #325fb4 100%);
+  color: white;
+  padding: 24px 5% 80px 5%; /* Padding generoso embaixo para os cards sobreporem */
+}
+
+.dashboard-hero-content {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dashboard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.dashboard-nav h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-nav h2 span {
+  color: #90cdf4; /* Azul claro para contraste no logo */
+}
+
+.btn-logout-white {
+  background: transparent;
+  color: white;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout-white:hover {
+  background: white;
+  color: #00225c;
+  border-color: white;
+}
+
+/* 3. MENSAGEM DE BOAS-VINDAS E AVATAR */
+.dashboard-welcome {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  background-color: #f6ad55; /* Laranja estilo destaque do Booking */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-text h1 {
+  margin: 0 0 4px 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.welcome-text p {
+  margin: 0;
+  font-size: 15px;
+  color: #e2e8f0;
+  font-weight: 400;
+}
+
+/* 4. ÁREA PRINCIPAL DOS CARDS */
+.dashboard-main-content {
+  max-width: 1100px;
+  margin: -40px auto 60px auto; /* Margem negativa puxa os cards para CIMA do azul */
+  padding: 0 5%;
+  position: relative;
+  z-index: 10;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Coluna da esquerda maior que a da direita */
+  gap: 24px;
+}
+
+/* Responsividade para celulares */
+@media(max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(43, 89, 180, 0.08);
+}
+
+.dashboard-card h3 {
+  margin-top: 0;
+  color: #1a1a1a;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.dashboard-card p {
+  color: #718096;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.btn-primary {
+  background-color: #325fb4;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #284c94;
+}
