@@ -1,0 +1,111 @@
+/* src/styles/Profile.css */
+
+.profile-card {
+  width: 800px; 
+  margin: 0 auto;
+  height: auto;
+  padding: 60px 50px; /* Paddings internos mais generosos */
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+  background-color: #ffffff;
+}
+
+.profile-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.profile-title {
+  font-size: 32px; /* Proporção ideal para o card maior */
+  color: #1a202c;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.profile-subtitle {
+  color: #718096;
+  font-size: 16px;
+  margin: 0;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.profile-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.profile-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 8px;
+}
+
+.profile-input {
+  padding: 16px 18px; /* Mais confortável para digitação */
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  font-size: 15px;
+  background-color: #fcfcfc;
+  transition: all 0.2s ease;
+  color: #1a202c;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Efeito moderno ao focar no campo */
+.profile-input:focus {
+  border-color: #325fb4;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(50, 95, 180, 0.1);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 20px;
+  margin-top: 14px;
+}
+
+.btn-cancel {
+  flex: 1;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e0;
+  background-color: #ffffff;
+  color: #4a5568;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #f7fafc;
+  border-color: #a0aec0;
+  color: #2d3748;
+}
+
+.btn-save {
+  flex: 1;
+  padding: 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #325fb4;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-save:hover {
+  background-color: #284c94;
+}

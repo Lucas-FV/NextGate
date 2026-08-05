@@ -1,7 +1,10 @@
 // src/components/AirlineDashboard.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- 1. Importando o hook de navegação
 
 export default function AirlineDashboard({ user, onLogout }) {
+  const navigate = useNavigate(); // <-- 2. Inicializando o navigate
+
   // Pega a primeira letra do nome da empresa para o Avatar circular
   const initial = user.name ? user.name.charAt(0).toUpperCase() : 'E';
 
@@ -49,6 +52,14 @@ export default function AirlineDashboard({ user, onLogout }) {
           <div className="dashboard-card">
             <h3>Perfil Corporativo</h3>
             <p>Atualize o CNPJ, dados de contato e preferências da empresa.</p>
+            {/* 3. Adicionamos o botão que leva para a tela de Perfil */}
+            <button 
+              className="btn-primary" 
+              onClick={() => navigate('/profile')}
+              style={{ marginTop: '16px', width: '100%' }}
+            >
+              Editar Perfil
+            </button>
           </div>
 
         </div>
