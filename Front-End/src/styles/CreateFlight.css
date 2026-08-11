@@ -1,0 +1,168 @@
+/* src/styles/CreateFlight.css */
+
+/* 1. QUEBRANDO AS MARGENS DO VITE E OCUPANDO 100% DA TELA */
+.cf-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; /* Força a altura exata da tela */
+  display: flex;
+  background-color: #ffffff;
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow: hidden; /* Remove a barra de rolagem principal */
+}
+
+/* 2. REMOVENDO O FORMATO DE "CARTÃO" */
+.cf-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  max-width: none; /* Remove o limite de largura */
+  border-radius: 0; /* Coloca cantos retos colados na tela */
+  box-shadow: none;
+}
+
+/* 3. ÁREA TEMÁTICA (LADO ESQUERDO) */
+.cf-banner {
+  flex: 1; /* Ocupa proporção igual */
+  background: linear-gradient(to bottom, rgba(0, 34, 92, 0.3), rgba(0, 34, 92, 0.9)), 
+              url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1000&auto=format&fit=crop') center/cover;
+  color: white;
+  padding: 60px 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cf-banner h2 {
+  font-size: 36px; /* Letra um pouco maior, já que temos espaço */
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.cf-banner p {
+  font-size: 18px;
+  opacity: 0.9;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* 4. ÁREA DO FORMULÁRIO (LADO DIREITO) */
+.cf-form-section {
+  flex: 1.2; /* Dá um pouco mais de espaço horizontal para o formulário */
+  padding: 40px 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza o formulário verticalmente perfeitamente */
+  overflow-y: auto; /* Se a tela for muito pequena, só o formulário ganha scroll */
+}
+
+.cf-header h1 {
+  color: #00225c;
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.cf-header p {
+  color: #718096;
+  margin: 0 0 24px 0; /* Margem reduzida para evitar scroll */
+  font-size: 15px;
+}
+
+/* 5. AJUSTES FINOS NOS CAMPOS PARA CABEREM NA TELA */
+.cf-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px; /* Gap levemente reduzido */
+}
+
+.cf-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.cf-input-group.full {
+  grid-column: span 2;
+}
+
+.cf-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cf-input {
+  padding: 12px 16px; /* Altura reduzida milimetricamente */
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.cf-input:focus {
+  border-color: #325fb4;
+  background: #ffffff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(50, 95, 180, 0.1);
+}
+
+/* 6. BOTÕES */
+.cf-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px; /* Subimos um pouco os botões */
+}
+
+.cf-btn {
+  flex: 1;
+  padding: 14px; /* Botões um pouco mais finos */
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.cf-btn-cancel {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  color: #475569;
+}
+
+.cf-btn-cancel:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+.cf-btn-submit {
+  background: #325fb4;
+  border: none;
+  color: #ffffff;
+}
+
+.cf-btn-submit:hover {
+  background: #284c94;
+}
+
+/* Responsividade para telas muito pequenas */
+@media(max-width: 900px) {
+  .cf-container {
+    flex-direction: column;
+  }
+  .cf-page {
+    overflow-y: auto; /* Devolve o scroll global no celular */
+  }
+  .cf-form-section {
+    justify-content: flex-start;
+  }
+}

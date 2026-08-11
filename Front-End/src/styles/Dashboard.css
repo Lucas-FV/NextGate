@@ -158,3 +158,76 @@
 .btn-primary:hover {
   background-color: #284c94;
 }
+
+.flight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 8px; /* Espaço para a barra de rolagem */
+}
+
+/* Customizando a barra de rolagem da lista */
+.flight-list::-webkit-scrollbar {
+  width: 6px;
+}
+.flight-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 10px;
+}
+
+.flight-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.flight-item:hover {
+  border-color: #cbd5e1;
+  background-color: #f1f5f9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.flight-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.flight-number {
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.flight-route {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.flight-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.flight-date {
+  color: #475569;
+  font-size: 13px;
+}
+
+.flight-price {
+  color: #10b981; /* Verde esmeralda para dar destaque ao valor */
+  font-weight: 700;
+  font-size: 16px;
+}

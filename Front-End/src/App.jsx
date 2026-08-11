@@ -4,7 +4,8 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
-
+import CreateFlight from './pages/CreateFlight'; 
+import EditFlight from './pages/EditFlight'; 
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/create-flight" element={<CreateFlight />} />
+        <Route path="/edit-flight/:id" element={<EditFlight />} />
       </Routes>
     </BrowserRouter>
   );
