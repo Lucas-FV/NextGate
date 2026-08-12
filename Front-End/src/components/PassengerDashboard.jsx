@@ -14,9 +14,23 @@ export default function PassengerDashboard({ user, onLogout }) {
       <div className="dashboard-hero">
         <div className="dashboard-hero-content">
           
-          <nav className="dashboard-nav">
-            <h2>Next<span>Gate</span></h2>
-            <button className="btn-logout-white" onClick={onLogout}>Sair</button>
+<nav className="dashboard-nav">
+            {/* Logo clicável */}
+            <h2 onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+              Next<span>Gate</span>
+            </h2>
+            
+            {/* Agrupando os botões */}
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button 
+                className="btn-logout-white" 
+                onClick={() => navigate('/')}
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', borderColor: 'transparent' }}
+              >
+                Início
+              </button>
+              <button className="btn-logout-white" onClick={onLogout}>Sair</button>
+            </div>
           </nav>
           
           <div className="dashboard-welcome">

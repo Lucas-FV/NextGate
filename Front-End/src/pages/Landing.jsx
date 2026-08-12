@@ -5,6 +5,9 @@ import '../styles/Landing.css';
 
 export default function Landing() {
   const navigate = useNavigate();
+  
+  // Verifica se existe algum usuário logado no momento
+  const currentUser = JSON.parse(localStorage.getItem('user'));
 
   return (
     <div className="landing-container">
@@ -14,9 +17,17 @@ export default function Landing() {
         <div className="nav-actions">
           <button className="nav-link">Suporte</button>
           <button className="nav-link">Ofertas</button>
-          <button className="btn-login-outline" onClick={() => navigate('/login')}>
-            Fazer Login
-          </button>
+          
+          {/* Lógica Dinâmica: Se estiver logado mostra "Meu Painel", senão "Fazer Login" */}
+          {currentUser ? (
+            <button className="btn-login-outline" onClick={() => navigate('/dashboard')}>
+              Meu Painel
+            </button>
+          ) : (
+            <button className="btn-login-outline" onClick={() => navigate('/login')}>
+              Fazer Login
+            </button>
+          )}
         </div>
       </nav>
 
