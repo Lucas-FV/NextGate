@@ -44,7 +44,7 @@ public class FlightService {
       return flightRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado!"));
    }
 
-   public Flight updateFlight (String id, Flight flight){
+public Flight updateFlight (String id, Flight flight){
       Flight existingFlight = flightRepository.findById(id).orElseThrow(() -> new RuntimeException("Voo não encontrado!"));
 
       if (flight.getDepartureTime().isBefore(LocalDateTime.now())) {
@@ -60,8 +60,12 @@ public class FlightService {
       }
 
       existingFlight.setAirlineId(flight.getAirlineId());
+      existingFlight.setFlightNumber(flight.getFlightNumber());
+      existingFlight.setOrigin(flight.getOrigin());
+      existingFlight.setDestination(flight.getDestination());
       existingFlight.setDepartureTime(flight.getDepartureTime());
       existingFlight.setArrivalTime(flight.getArrivalTime());
+      existingFlight.setPrice(flight.getPrice());
       existingFlight.setTotalCapacity(flight.getTotalCapacity());
       existingFlight.setAvailableSeats(flight.getAvailableSeats());
 
