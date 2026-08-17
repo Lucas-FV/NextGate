@@ -4,13 +4,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%; /* <-- A mágica acontece aqui: troque 100vw por 100% */
+  width: 100%;
   box-sizing: border-box;
   min-height: 100vh;
   background-color: #f7f9fc;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1a1a1a;
-  overflow-x: hidden; /* Garante que nada vaze para os lados */
+  overflow-x: hidden;
 }
 
 /* NAVBAR */
