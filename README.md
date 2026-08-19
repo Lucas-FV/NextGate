@@ -43,14 +43,59 @@ Este projeto foi desenvolvido utilizando a seguinte stack:
 
 ## ⚙️ Como executar o projeto localmente
 
-Siga os passos abaixo para rodar o NextGate na sua máquina.
+Siga os passos abaixo para rodar o NextGate na sua máquina local.
 
 ### Pré-requisitos
-- Node.js e npm instalados
-- Java JDK 17 (ou superior) instalado
-- Maven instalado
-- MongoDB rodando na porta padrão (localmente ou via Atlas)
+Antes de começar, você vai precisar ter as seguintes ferramentas instaladas na sua máquina:
+* [Git](https://git-scm.com)
+* [Node.js](https://nodejs.org/en/) (versão 16 ou superior)
+* [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) (ou superior)
+* [Maven](https://maven.apache.org/)
+* [MongoDB](https://www.mongodb.com/) rodando localmente na porta padrão (`27017`) ou uma URL do MongoDB Atlas.
 
-### 1. Clonando o repositório
+### 1. Clonando o Repositório
+
+Abra o seu terminal e rode o comando abaixo para clonar o projeto:
+
 ```bash
 git clone [https://github.com/Lucas-FV/nextgate.git](https://github.com/Lucas-FV/nextgate.git)
+```
+
+### 2. Rodando o Back-End (Spring Boot)
+
+Abra um terminal na raiz do projeto e navegue até a pasta do servidor:
+
+```bash
+cd back-end
+cd backend
+```
+
+> **Nota:** Verifique o arquivo `src/main/resources/application.properties` e certifique-se de que a URI do MongoDB (`spring.data.mongodb.uri`) está apontando para o seu banco de dados corretamente.
+
+Execute a aplicação com o Maven:
+
+```bash
+mvn spring-boot:run
+```
+O servidor iniciará e a API estará disponível em: `http://localhost:8080`
+
+### 3. Rodando o Front-End (React)
+
+Abra uma **nova aba** no terminal (mantenha o servidor do Back-End rodando na outra) e navegue até a pasta do front-end:
+
+```bash
+cd front-end
+```
+
+Instale as dependências do projeto:
+
+```bash
+npm install
+```
+
+Inicie o servidor de desenvolvimento do Vite:
+
+```bash
+npm run dev
+```
+A interface web abrirá automaticamente ou estará disponível em: `http://localhost:5173`
