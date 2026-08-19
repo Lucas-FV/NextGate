@@ -8,6 +8,7 @@ import CreateFlight from './pages/CreateFlight';
 import EditFlight from './pages/EditFlight'; 
 import Search from './pages/Search';
 import Checkout from './pages/Checkout';
+import Payment from './pages/Payment';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/edit-flight/:id" element={<EditFlight />} />
         <Route path="/search" element={<Search />} />
         <Route path="/checkout/:flightId" element={<Checkout />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </BrowserRouter>
   );

@@ -5,6 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface TicketRepository extends MongoRepository<Ticket, String> {
-    List<Ticket> findByPassangerId(String passangerId);
+    // Método customizado para buscar as passagens de um passageiro específico
+    List<Ticket> findByPassengerId(String passengerId);
+    
+    // Método para buscar os assentos já ocupados de um voo
     List<Ticket> findByFlightId(String flightId);
 }

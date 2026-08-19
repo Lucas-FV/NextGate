@@ -5,67 +5,43 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Document(collection = "tickets")
-public class Ticket{
+public class Ticket {
 
     @Id
     private String id;
-    private String passangerId;
-    private String flightId;
-    private String seat;
-    private Double totalPrice;
-    private LocalDateTime purchaseDate;
+    private String passengerId; // ID do usuário que comprou
+    private String flightId;    // ID do voo
+    private String seat;        // Assento (ex: "3A")
+    private Double totalPrice;  // Valor total pago
+    private LocalDateTime purchaseDate; // Data da compra
 
-    public Ticket(){
+    // Construtores
+    public Ticket() {}
 
-    }
-
-    public Ticket(String passangerId, String flightId, String seat, Double totalPrice, LocalDateTime purchaseDate) {
-        this.passangerId = passangerId;
+    public Ticket(String passengerId, String flightId, String seat, Double totalPrice, LocalDateTime purchaseDate) {
+        this.passengerId = passengerId;
         this.flightId = flightId;
         this.seat = seat;
         this.totalPrice = totalPrice;
         this.purchaseDate = purchaseDate;
     }
 
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
+    // Getters e Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public String getPassangerId() {
-        return passangerId;
-    }
-    public void setPassangerId(String passangerId) {
-        this.passangerId = passangerId;
-    }
-    
-    public String getFlightId() {
-        return flightId;
-    }
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
+    public String getPassengerId() { return passengerId; }
+    public void setPassengerId(String passengerId) { this.passengerId = passengerId; }
 
-    public String getSeat() {
-        return seat;
-    }
-    public void setSeat(String seat) {
-        this.seat = seat;
-    }
+    public String getFlightId() { return flightId; }
+    public void setFlightId(String flightId) { this.flightId = flightId; }
 
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    public String getSeat() { return seat; }
+    public void setSeat(String seat) { this.seat = seat; }
 
-    public LocalDateTime getPurchaseDate() {
-        return purchaseDate;
-    }
-    public void setPurchaseDate(LocalDateTime purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
+    public Double getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(Double totalPrice) { this.totalPrice = totalPrice; }
+
+    public LocalDateTime getPurchaseDate() { return purchaseDate; }
+    public void setPurchaseDate(LocalDateTime purchaseDate) { this.purchaseDate = purchaseDate; }
 }

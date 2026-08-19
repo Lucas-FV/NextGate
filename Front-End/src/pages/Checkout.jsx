@@ -7,65 +7,72 @@ import '../styles/Checkout.css';
 export default function Checkout() {
   const { flightId } = useParams();
   const navigate = useNavigate();
-  const currentUser = JSON.parse(localStorage.getItem('user'));
 
   const [flight, setFlight] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  // Estados do Checkout
   const [selectedSeat, setSelectedSeat] = useState(null);
-  const [finalSeat, setFinalSeat] = useState(null); // Guarda o assento final (escolhido ou sorteado)
-  const [paymentState, setPaymentState] = useState('idle'); // idle, processing, success
   const [seats, setSeats] = useState([]);
 
   useEffect(() => {
-    // 1. Busca os dados do voo
-    const fetchFlight = async () => {
+    const fetchFlightAndSeats = async () => {
       try {
-        const response = await api.get('/flights'); 
-        const currentFlight = response.data.find(f => f.id === flightId);
+        const flightResponse = await api.get('/flights'); 
+        const currentFlight = flightResponse.data.find(f => f.id === flightId);
         setFlight(currentFlight);
+
+        const ticketsResponse = await api.get(`/tickets/flight/${flightId}`);
+        const occupiedSeatIds = ticketsResponse.data.map(ticket => ticket.seat);
+
+        // --- NOVA LÓGICA DINÂMICA DE ASSENTOS ---
+        const capacity = currentFlight.totalCapacity; 
+        const cols = ['A', 'B', 'C', 'D', 'E', 'F'];
+        
+        // Calcula quantas fileiras o avião vai ter (ex: 200 / 6 = 33.33 -> arredonda para 34)
+        const rows = Math.ceil(capacity / cols.length); 
+        let generatedSeats = [];
+        let seatCount = 0; // Contador para não criarmos assentos a mais na última fileira
+
+        for (let r = 1; r <= rows; r++) {
+          for (let i = 0; i < cols.length; i++) {
+            // Se já desenhou todos os assentos da capacidade, para o loop
+            if (seatCount >= capacity) break; 
+
+            const c = cols[i];
+            // Vamos definir que uns 15% iniciais do avião são Premium
+            const isPremium = r <= Math.ceil(rows * 0.15); 
+            const seatPrice = isPremium ? 150 : 50;
+            const seatId = `${r}${c}`;
+            
+            generatedSeats.push({
+              id: seatId,
+              row: r,
+              col: c,
+              isPremium,
+              price: seatPrice,
+              isOccupied: occupiedSeatIds.includes(seatId) 
+            });
+
+            seatCount++;
+          }
+        }
+        setSeats(generatedSeats);
+        // ---------------------------------------
+
       } catch (error) {
-        console.error("Erro ao buscar voo:", error);
+        console.error("Erro ao buscar dados do checkout:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    // 2. Gera o mapa de assentos totalmente vazio (sem ocupações aleatórias)
-    const generateSeats = () => {
-      const rows = 12; // 12 fileiras
-      const cols = ['A', 'B', 'C', 'D', 'E', 'F'];
-      let generatedSeats = [];
-
-      for (let r = 1; r <= rows; r++) {
-        cols.forEach(c => {
-          const isPremium = r <= 3; // Fileiras 1 a 3 são Premium (+R$ 150)
-          const seatPrice = isPremium ? 150 : 50; // Fileiras normais (+R$ 50)
-          
-          generatedSeats.push({
-            id: `${r}${c}`,
-            row: r,
-            col: c,
-            isPremium,
-            price: seatPrice,
-            isOccupied: false // REGRA ATUALIZADA: Todos os assentos começam livres
-          });
-        });
-      }
-      setSeats(generatedSeats);
-    };
-
-    fetchFlight();
-    generateSeats();
+    fetchFlightAndSeats();
   }, [flightId]);
 
   const formatPrice = (price) => price.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
   
   const handleSeatClick = (seat) => {
     if (seat.isOccupied) return;
-    
-    // Se clicar no assento que já está selecionado, ele desmarca (permite não escolher nada)
     if (selectedSeat?.id === seat.id) {
       setSelectedSeat(null);
     } else {
@@ -73,34 +80,25 @@ export default function Checkout() {
     }
   };
 
-  const handlePayment = (e) => {
-    e.preventDefault();
-    setPaymentState('processing');
-
+  // NOVA AÇÃO DO BOTÃO: Apenas redireciona para a tela de pagamento
+  const handleGoToPayment = () => {
     let seatToAssign = selectedSeat;
 
-    // REGRA DE NEGÓCIO: Se não escolheu, sorteia um assento BÁSICO e LIVRE
+    // Se não escolheu, sorteia um livre
     if (!seatToAssign) {
       const availableBasicSeats = seats.filter(s => !s.isPremium && !s.isOccupied);
       const randomIndex = Math.floor(Math.random() * availableBasicSeats.length);
       seatToAssign = availableBasicSeats[randomIndex];
     }
 
-    // Salva qual foi o assento definitivo para mostrar no modal
-    setFinalSeat(seatToAssign);
-
-    // Simula tempo de processamento de cartão (2 segundos)
-    setTimeout(() => {
-      setPaymentState('success');
-      
-      // Futuramente, enviaremos o POST para /tickets aqui
-      
-      // Redireciona para o painel do passageiro
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 3500);
-
-    }, 2000);
+    // Leva o usuário para a rota /payment, passando os dados no "state"
+    navigate('/payment', {
+      state: {
+        flight,
+        seat: seatToAssign,
+        totalPrice: flight.price + seatToAssign.price
+      }
+    });
   };
 
   if (loading) return <div className="checkout-loading">Preparando seu voo...</div>;
@@ -117,28 +115,7 @@ export default function Checkout() {
         </div>
       </nav>
 
-      {/* TELA DE SUCESSO */}
-      {paymentState === 'success' && (
-        <div className="payment-success-overlay">
-          <div className="success-card">
-            <div className="success-icon">✓</div>
-            <h2>Pagamento Aprovado!</h2>
-            <p>Sua reserva para <strong>{flight.destination}</strong> foi confirmada com sucesso.</p>
-            
-            {/* Mostra se o assento foi escolhido ou sorteado */}
-            <p>
-              Assento: <strong>{finalSeat.id}</strong> 
-              {!selectedSeat && <span style={{ color: '#64748b', fontSize: '12px', display: 'block' }}>(Atribuído aleatoriamente)</span>}
-            </p>
-            
-            <small>Redirecionando para o seu painel...</small>
-          </div>
-        </div>
-      )}
-
       <main className="checkout-content">
-        
-        {/* COLUNA ESQUERDA: Detalhes e Assentos */}
         <div className="checkout-left">
           <div className="flight-summary-card">
             <h2>Resumo do Voo</h2>
@@ -165,37 +142,41 @@ export default function Checkout() {
               <span className="legend-item"><div className="seat-box selected"></div> Selecionado</span>
             </div>
 
-            <div className="airplane-cabin">
-              <div className="cabin-front"></div>
-              <div className="seat-grid">
-                {seats.map(seat => {
-                  let seatClass = 'seat ';
-                  if (seat.isOccupied) seatClass += 'occupied';
-                  else if (selectedSeat?.id === seat.id) seatClass += 'selected';
-                  else if (seat.isPremium) seatClass += 'premium';
-                  else seatClass += 'available';
+            {/* AQUI ESTÁ A ATUALIZAÇÃO DO SCROLL */}
+            <div className="airplane-scroll">
+              <div className="airplane-cabin">
+                <div className="cabin-front"></div>
+                <div className="seat-grid">
+                  {seats.map(seat => {
+                    let seatClass = 'seat ';
+                    if (seat.isOccupied) seatClass += 'occupied';
+                    else if (selectedSeat?.id === seat.id) seatClass += 'selected';
+                    else if (seat.isPremium) seatClass += 'premium';
+                    else seatClass += 'available';
 
-                  const isAisle = seat.col === 'C';
+                    const isAisle = seat.col === 'C';
 
-                  return (
-                    <div 
-                      key={seat.id} 
-                      className={`${seatClass} ${isAisle ? 'aisle' : ''}`}
-                      onClick={() => handleSeatClick(seat)}
-                    >
-                      {seat.id}
-                    </div>
-                  );
-                })}
+                    return (
+                      <div 
+                        key={seat.id} 
+                        className={`${seatClass} ${isAisle ? 'aisle' : ''}`}
+                        onClick={() => handleSeatClick(seat)}
+                      >
+                        {seat.id}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
+            {/* FIM DA ATUALIZAÇÃO DO SCROLL */}
+
           </div>
         </div>
 
-        {/* COLUNA DIREITA: Pagamento */}
         <div className="checkout-right">
           <div className="payment-card">
-            <h2>Pagamento</h2>
+            <h2>Valores da Viagem</h2>
             
             <div className="price-breakdown">
               <div className="price-row">
@@ -203,49 +184,22 @@ export default function Checkout() {
                 <span>R$ {formatPrice(flight.price)}</span>
               </div>
               <div className="price-row">
-                {/* Texto dinâmico dependendo se escolheu assento ou não */}
                 <span>Assento {selectedSeat ? selectedSeat.id : '(Aleatório básico)'}</span>
                 <span>R$ {selectedSeat ? formatPrice(selectedSeat.price) : '0,00'}</span>
               </div>
               <div className="price-divider"></div>
               <div className="price-total">
-                <span>Total</span>
+                <span>Total a Pagar</span>
                 <span>R$ {formatPrice(totalPrice)}</span>
               </div>
             </div>
 
-            <form className="payment-form" onSubmit={handlePayment}>
-              <div className="form-group">
-                <label>Nome no Cartão</label>
-                <input type="text" placeholder="JOAO DA SILVA" required />
-              </div>
-              <div className="form-group">
-                <label>Número do Cartão</label>
-                <input type="text" placeholder="0000 0000 0000 0000" maxLength="19" required />
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Validade</label>
-                  <input type="text" placeholder="MM/AA" maxLength="5" required />
-                </div>
-                <div className="form-group">
-                  <label>CVV</label>
-                  <input type="password" placeholder="123" maxLength="3" required />
-                </div>
-              </div>
-
-              {/* Removida a trava "!selectedSeat", agora ele pode pagar sem escolher */}
-              <button 
-                type="submit" 
-                className="btn-confirm-payment" 
-                disabled={paymentState === 'processing'}
-              >
-                {paymentState === 'processing' ? 'Processando...' : `Pagar R$ ${formatPrice(totalPrice)}`}
-              </button>
-            </form>
+            {/* BOTÃO ATUALIZADO */}
+            <button className="btn-confirm-payment" onClick={handleGoToPayment}>
+              Ir para Pagamento
+            </button>
           </div>
         </div>
-
       </main>
     </div>
   );

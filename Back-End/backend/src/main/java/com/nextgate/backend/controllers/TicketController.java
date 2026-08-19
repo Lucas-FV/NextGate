@@ -1,0 +1,49 @@
+package com.nextgate.backend.controllers;
+
+import com.nextgate.backend.dto.TicketDTO;
+import com.nextgate.backend.models.Ticket;
+import com.nextgate.backend.repositories.TicketRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/tickets")
+@CrossOrigin(origins = "http://localhost:5173") // Permite que o React faça chamadas para cá
+public class TicketController {
+
+    @Autowired
+    private TicketRepository ticketRepository;
+
+    // 1. Criar uma nova passagem (Compra)
+    @PostMapping
+    public ResponseEntity<Ticket> createTicket(@RequestBody TicketDTO dto) {
+        Ticket newTicket = new Ticket(
+                dto.getPassengerId(),
+                dto.getFlightId(),
+                dto.getSeat(),
+                dto.getTotalPrice(),
+                LocalDateTime.now() // Registra o momento exato da compra
+        );
+
+        Ticket savedTicket = ticketRepository.save(newTicket);
+        return ResponseEntity.ok(savedTicket);
+    }
+
+    // 2. Buscar passagens de um passageiro (Para o Dashboard)
+    @GetMapping("/passenger/{passengerId}")
+    public ResponseEntity<List<Ticket>> getTicketsByPassenger(@PathVariable String passengerId) {
+        List<Ticket> tickets = ticketRepository.findByPassengerId(passengerId);
+        return ResponseEntity.ok(tickets);
+    }
+
+    // 3. Buscar assentos ocupados de um voo específico (Para bloquear no React)
+    @GetMapping("/flight/{flightId}")
+    public ResponseEntity<List<Ticket>> getTicketsByFlight(@PathVariable String flightId) {
+        List<Ticket> tickets = ticketRepository.findByFlightId(flightId);
+        return ResponseEntity.ok(tickets);
+    }
+}
