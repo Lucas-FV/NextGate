@@ -16,9 +16,13 @@ public class FlightController {
    @Autowired
    private FlightService flightService;
 
-   @PostMapping
+@PostMapping
    public ResponseEntity<?> createFlight(@RequestBody Flight flight) {
       try {
+         if (flight.getTotalCapacity() != null) {
+             flight.setAvailableSeats(flight.getTotalCapacity());
+         }
+
          Flight newFlight = flightService.createFlight(flight);
          return new ResponseEntity<>(newFlight, HttpStatus.CREATED);
       } catch (RuntimeException e) {

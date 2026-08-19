@@ -9,20 +9,57 @@ export default function Payment() {
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem('user'));
 
-  // Pega os dados que vieram do Checkout
   const { flight, seat, totalPrice } = location.state || {};
 
-  const [paymentMethod, setPaymentMethod] = useState('credit_card'); // 'credit_card' ou 'pix'
+  const [paymentMethod, setPaymentMethod] = useState('credit_card');
   const [installments, setInstallments] = useState(1);
   const [paymentState, setPaymentState] = useState('idle');
 
-  // Se acessar direto pela URL sem vir do checkout, volta pro início
+  // NOVOS ESTADOS PARA O CARTÃO COM MÁSCARAS
+  const [cardName, setCardName] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
+
   if (!flight || !seat) {
     navigate('/');
     return null;
   }
 
   const formatPrice = (price) => price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // FUNÇÕES DE MÁSCARA (Formatam o texto enquanto o usuário digita)
+  const handleCardNameChange = (e) => {
+    // Força tudo para maiúsculo e remove números
+    const value = e.target.value.toUpperCase().replace(/[0-9]/g, '');
+    setCardName(value);
+  };
+
+  const handleCardNumberChange = (e) => {
+    // Remove tudo que não for número
+    let value = e.target.value.replace(/\D/g, '');
+    // Adiciona um espaço a cada 4 números
+    value = value.replace(/(.{4})/g, '$1 ').trim();
+    // Limita a 19 caracteres (16 números + 3 espaços)
+    setCardNumber(value.substring(0, 19));
+  };
+
+  const handleCardExpiryChange = (e) => {
+    // Remove tudo que não for número
+    let value = e.target.value.replace(/\D/g, '');
+    // Adiciona a barra depois do mês
+    if (value.length >= 3) {
+      value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    // Limita a 5 caracteres (MM/AA)
+    setCardExpiry(value.substring(0, 5));
+  };
+
+  const handleCardCvvChange = (e) => {
+    // Apenas números, limite de 4 caracteres
+    let value = e.target.value.replace(/\D/g, '');
+    setCardCvv(value.substring(0, 4));
+  };
 
   const handleConfirmPayment = async (e) => {
     e.preventDefault();
@@ -36,7 +73,6 @@ export default function Payment() {
         totalPrice: totalPrice
       };
 
-      // Chama a API para salvar a compra
       await api.post('/tickets', ticketData);
       setPaymentState('success');
       
@@ -60,7 +96,6 @@ export default function Payment() {
         </div>
       </nav>
 
-      {/* TELA DE SUCESSO (Mantida igual, pois a lógica de salvar veio pra cá) */}
       {paymentState === 'success' && (
         <div className="payment-success-overlay">
           <div className="success-card">
@@ -97,20 +132,44 @@ export default function Payment() {
               <form onSubmit={handleConfirmPayment}>
                 <div className="form-group">
                   <label>Nome impresso no Cartão</label>
-                  <input type="text" placeholder="JOAO DA SILVA" required />
+                  <input 
+                    type="text" 
+                    placeholder="JOAO DA SILVA" 
+                    value={cardName}
+                    onChange={handleCardNameChange}
+                    required 
+                  />
                 </div>
                 <div className="form-group">
                   <label>Número do Cartão</label>
-                  <input type="text" placeholder="0000 0000 0000 0000" maxLength="19" required />
+                  <input 
+                    type="text" 
+                    placeholder="0000 0000 0000 0000" 
+                    value={cardNumber}
+                    onChange={handleCardNumberChange}
+                    required 
+                  />
                 </div>
                 <div className="form-row">
                   <div className="form-group">
                     <label>Validade</label>
-                    <input type="text" placeholder="MM/AA" maxLength="5" required />
+                    <input 
+                      type="text" 
+                      placeholder="MM/AA" 
+                      value={cardExpiry}
+                      onChange={handleCardExpiryChange}
+                      required 
+                    />
                   </div>
                   <div className="form-group">
                     <label>CVV</label>
-                    <input type="password" placeholder="123" maxLength="3" required />
+                    <input 
+                      type="password" 
+                      placeholder="123" 
+                      value={cardCvv}
+                      onChange={handleCardCvvChange}
+                      required 
+                    />
                   </div>
                 </div>
                 <div className="form-group">
@@ -128,7 +187,7 @@ export default function Payment() {
                     <option value={6}>6x de R$ {formatPrice(totalPrice / 6)} sem juros</option>
                   </select>
                 </div>
-                <button type="submit" className="btn-confirm-payment" disabled={paymentState === 'processing'}>
+                <button type="submit" className="btn-confirm-payment" disabled={paymentState === 'processing' || cardNumber.length < 19 || cardExpiry.length < 5}>
                   {paymentState === 'processing' ? 'Processando...' : `Confirmar Pagamento`}
                 </button>
               </form>
@@ -138,7 +197,6 @@ export default function Payment() {
               <div className="pix-container">
                 <p>Escaneie o QR Code abaixo no app do seu banco para pagar.</p>
                 <div className="qr-code-mock">
-                  {/* Simulando um QR Code visualmente */}
                   <div className="qr-inner"></div>
                 </div>
                 <p className="pix-value">Valor: <strong>R$ {formatPrice(totalPrice)}</strong></p>

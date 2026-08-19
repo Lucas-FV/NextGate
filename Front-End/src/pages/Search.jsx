@@ -128,7 +128,7 @@ const handleBuy = (flightId) => {
                   </div>
                 </div>
 
-                <div className="flight-action">
+<div className="flight-action">
                   <div className="price-block">
                     <small>Por passageiro</small>
                     <span className="price">R$ {formatPrice(flight.price)}</span>
@@ -136,7 +136,11 @@ const handleBuy = (flightId) => {
                   <button className="btn-buy" onClick={() => handleBuy(flight.id)}>
                     Selecionar
                   </button>
-                  <small className="seats-left">{flight.totalCapacity} assentos restantes</small>
+                  
+                  <small className="seats-left">
+                    {flight.availableSeats ?? flight.totalCapacity} assentos restantes
+                  </small>
+                  
                 </div>
                 
               </div>

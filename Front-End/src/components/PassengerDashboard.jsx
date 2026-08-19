@@ -22,13 +22,16 @@ export default function PassengerDashboard({ user, onLogout }) {
         const flightsResponse = await api.get('/flights');
         
         // 2. Cruze os dados para pegar a cidade de origem e destino
-        const enrichedTickets = ticketsResponse.data.map(ticket => {
-          const flightDetails = flightsResponse.data.find(f => f.id === ticket.flightId);
-          return {
-            ...ticket,
-            flight: flightDetails || null
-          };
-        });
+// 2. Cruze os dados para pegar a cidade de origem e destino
+        const enrichedTickets = ticketsResponse.data
+          .map(ticket => {
+            const flightDetails = flightsResponse.data.find(f => f.id === ticket.flightId);
+            return {
+              ...ticket,
+              flight: flightDetails || null
+            };
+          })
+          .filter(ticket => ticket.flight !== null); 
 
         // 3. Ordena para a passagem mais nova aparecer primeiro
         enrichedTickets.sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate));

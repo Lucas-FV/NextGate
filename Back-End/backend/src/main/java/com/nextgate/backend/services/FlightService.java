@@ -67,8 +67,7 @@ public Flight updateFlight (String id, Flight flight){
       existingFlight.setArrivalTime(flight.getArrivalTime());
       existingFlight.setPrice(flight.getPrice());
       existingFlight.setTotalCapacity(flight.getTotalCapacity());
-      existingFlight.setAvailableSeats(flight.getAvailableSeats());
-
+      
       return flightRepository.save(existingFlight);
    }
 
