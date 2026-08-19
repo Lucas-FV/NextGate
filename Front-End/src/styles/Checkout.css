@@ -1,0 +1,281 @@
+/* src/styles/Checkout.css */
+.checkout-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+}
+
+.checkout-navbar {
+  background-color: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 5%;
+}
+
+.btn-back-outline {
+  background: transparent;
+  border: 1px solid #64748b;
+  color: #475569;
+  padding: 8px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-back-outline:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.checkout-loading {
+  text-align: center;
+  padding: 100px;
+  font-size: 20px;
+  color: #64748b;
+}
+
+.checkout-content {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 5%;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 32px;
+}
+
+/* CARDS PADRÃO */
+.flight-summary-card, .seat-selection-card, .payment-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.flight-summary-card h2, .seat-selection-card h2, .payment-card h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+/* RESUMO DO VOO */
+.flight-summary-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.fs-airport {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #325fb4;
+}
+
+.fs-time {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.fs-airplane {
+  font-size: 32px;
+  color: #cbd5e1;
+}
+
+.fs-date {
+  text-align: center;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* CABINE E ASSENTOS */
+.seat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.seat-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.airplane-cabin {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 100px 100px 20px 20px; /* Bico do avião */
+  padding: 60px 30px 40px 30px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.seat {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px 8px 4px 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.seat.aisle {
+  margin-right: 20px; /* O corredor do avião */
+}
+
+.seat.available { background: #e2e8f0; color: #475569; }
+.seat.available:hover { background: #cbd5e1; }
+
+.seat.premium { background: #fef08a; color: #854d0e; border: 1px solid #fde047; }
+.seat.premium:hover { background: #fde047; }
+
+.seat.occupied { background: #cbd5e1; color: #f8fafc; cursor: not-allowed; opacity: 0.5; }
+
+.seat.selected { background: #325fb4; color: white; transform: scale(1.1); box-shadow: 0 4px 8px rgba(50, 95, 180, 0.4); }
+
+/* PAGAMENTO E RESUMO DE PREÇOS */
+.price-breakdown {
+  margin-bottom: 24px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  color: #475569;
+}
+
+.price-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 16px 0;
+}
+
+.price-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #325fb4;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-confirm-payment {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.btn-confirm-payment:hover:not(:disabled) { background-color: #059669; }
+.btn-confirm-payment:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+/* MODAL DE SUCESSO */
+.payment-success-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(15, 23, 42, 0.8);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000;
+}
+
+.success-card {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  text-align: center;
+  max-width: 400px;
+  animation: slideUp 0.4s ease-out;
+}
+
+.success-icon {
+  width: 80px; height: 80px;
+  background: #10b981; color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; font-weight: bold;
+  margin: 0 auto 24px auto;
+}
+
+.success-card h2 { color: #0f172a; margin-bottom: 16px; }
+.success-card p { color: #475569; margin-bottom: 8px; line-height: 1.5; }
+.success-card small { display: block; margin-top: 24px; color: #94a3b8; }
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .checkout-content { grid-template-columns: 1fr; }
+}

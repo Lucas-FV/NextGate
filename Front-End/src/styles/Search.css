@@ -1,0 +1,193 @@
+/* src/styles/Search.css */
+.search-page-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+}
+
+.search-navbar {
+  background-color: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 16px 5%;
+}
+
+.search-content {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 5%;
+}
+
+.search-header {
+  margin-bottom: 32px;
+}
+
+.search-header h1 {
+  color: #0f172a;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.search-header p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* LISTA DE VOOS */
+.flights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.flight-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.flight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  border-color: #325fb4;
+}
+
+/* ROTA E HORÁRIOS */
+.flight-info {
+  flex: 2;
+}
+
+.flight-route {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-block .time {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.time-block .airport {
+  font-size: 18px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.flight-duration {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.airplane-icon {
+  color: #325fb4;
+  font-size: 24px;
+  margin: 0 10px;
+}
+
+.flight-duration small {
+  color: #94a3b8;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+/* PREÇO E BOTÃO */
+.flight-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  border-left: 1px dashed #cbd5e1;
+  padding-left: 32px;
+}
+
+.price-block {
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+.price-block small {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.price-block .price {
+  font-size: 28px;
+  font-weight: 800;
+  color: #10b981;
+}
+
+.btn-buy {
+  background-color: #325fb4;
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.btn-buy:hover {
+  background-color: #1e3a8a;
+}
+
+.seats-left {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ESTADOS VAZIOS E CARREGAMENTO */
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+}
+
+.empty-state h2 {
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.btn-back {
+  background-color: transparent;
+  border: 2px solid #325fb4;
+  color: #325fb4;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
